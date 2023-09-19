@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ii>
+	<!-- 
+	(?i) : makes the regex case insensitive 
+	-->
+	<rules name="general">
+		<rule type="regex" value="\s$" message="Empty space at the end"/>
+		<rule type="regex" value="^\s" message="Empty space at the beginning"/>
+		<rule type="regex" value="\s{2}" message="Repeated spaces"/>
+		<rule type="regex" value="(?i)copy" message="Illegal phrase (copy)" severity="warn" />
+		<rule type="regex" value="(?i)kopie" message="Illegal phrase (kopie)" severity="warn" />
+		<rule type="regex" value="\." message="Illegal sign (.)" severity="warn" />
+		<rule type="regex" value="´" message="Illegal sign (´)" severity="warn" />
+		<rule type="regex" value="`" message="Illegal sign (`)" severity="warn" />
+		<rule type="regex" value="_" message="Illegal sign (_)" severity="warn" />
+		<rule type="regex" value="(?i)i ve" message="Missing apostrophe (i've)" severity="warn" />
+		<rule type="regex" value="(?i)ive(?&lt;!(give|live|five|rive))\s" message="Missing apostrophe (i've)" severity="warn" />
+		<rule type="regex" value="(?i)you re" message="Missing apostrophe (your're)" severity="warn" />
+		<rule type="regex" value="(?i)youre" message="Missing apostrophe (you're)" severity="warn" />
+		<rule type="regex" value="(?i)i m " message="Missing apostrophe (i'm)" severity="warn" />
+		<rule type="regex" value="(?i)im " message="Missing apostrophe (i'm)" severity="warn" />
+		<rule type="regex" value="n t\s" message="Missing apostrophe (n't)" severity="warn" />
+		<rule type="regex" value="nt\s(?&lt;!(want\s|went\s))" message="Missing apostrophe (n't)" severity="warn" />
+		<rule type="regex" value="(?!(main|rain|gain))\S\Sin\s" message="Missing apostrophe (-in')" severity="warn" />
+		<!-- 
+		 -->
+	</rules>
+	<rules name="start-case">
+		<rule type="regex" value="^[^A-ZÄÜÖ0-9]" message="Start case required"/>
+		<rule type="regex" value="\s[^A-ZÄÜÖ0-9\[\'\(\-\+%&amp;]" message="Start case required"/>
+		<rule type="regex" value="[^A-ZÄÜÖ\s\'\-\[\(\)\]][A-ZÄÜÖ]" message="Start case required"/>
+		<rule type="regex" value="(?!(CD))[A-ZÄÜÖ]{2}" message="Start case required"/>
+	</rules>
+	<rules name="lower-case">
+		<rule type="regex" value="[A-Z]" message="Lower case required" />
+	</rules>
+	<profile name="mp3" description="MP3 CD">
+		<path>/Various Artists/album/disktype diskno/no-track - artist.ext</path>
+		<path>/Various Artists/album/no-track - artist.ext</path>
+		<path>/Various Artists/album/no-track.ext</path>
+		<path>/Various Artists/track - artist.ext</path>
+			
+		<path>/genre/album/no-track - artist.ext</path>
+			
+		<path>/artist/album/disktype diskno/no-track.ext</path>
+		<!-- 
+		<path>/artist/album/disktype diskno/no-track - artist.ext</path>
+		<path>/artist/album/_/no-track.ext</path>
+		<path>/artist/album/no-track - artist.ext</path>
+		 -->
+		<path>/artist/album/no-track.ext</path>
+		<path>/artist/track.ext</path>
+		<variable name="artist" pattern="(?!Various Artists).*">
+			<rules ref="general" />
+			<rules ref="start-case" />
+			
+			<rule type="regex" value="Various Artists" message="Illegal name"/>
+		</variable>
+		<variable name="album">
+			<rules ref="general" />
+			<rules ref="start-case" />
+		</variable>
+		<variable name="disktype">
+			<rules ref="general" />
+			<rules ref="start-case" />
+			<rule type="regex" value="(?i)(CD|Disk|Disc)" invert="true" message="Illegal disk type"/>
+		</variable>
+		<variable name="diskno" pattern="[0-9]{1,3}">
+			<rules ref="general" />
+			<rule type="regex" value="[0-9]{1,3}" invert="true" message="Only digits allowed" />
+			<rule type="numbering" message="Illegal numbering" />
+		</variable>
+		<variable name="no" pattern="[0-9]{1,3}">
+			<rules ref="general" />
+			<rule type="regex" value="[0-9]{1,3}" invert="true" message="Only digits allowed" />
+			<rule type="numbering" message="Illegal numbering" />
+		</variable>
+		<variable name="track">
+			<rules ref="general" />
+			<rules ref="lower-case" />
+		</variable>
+		<variable name="ext" pattern=".{1,3}">
+			<rules ref="lower-case" />
+			<rule type="regex" value="mp3" invert="true" message="Only MP3 allowed" />
+		</variable>
+	</profile>
+</ii>
