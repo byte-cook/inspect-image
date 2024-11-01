@@ -20,6 +20,11 @@ curl -LJO https://raw.githubusercontent.com/byte-cook/inspect-image/main/xmlutil
 chmod +x ii.py 
 ```
 
+3. (Optional) Use opt.py to install it to the /opt directory:
+```
+sudo opt.py install inspect-image ii.py xmlutil.py
+```
+
 ## Define desired structure and rules
 
 See ii.xml for an example of how to define the rules.
