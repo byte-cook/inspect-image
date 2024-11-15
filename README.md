@@ -10,7 +10,7 @@ The desired structure and rules are defined once in an xml file. The program rea
 
 1. Install Python3 as follows in Ubuntu/Debian Linux:
 ```
-sudo apt install python3.6
+sudo apt install python3
 ```
 
 2. Download II.py and set execute permmissions:
@@ -20,7 +20,7 @@ curl -LJO https://raw.githubusercontent.com/byte-cook/inspect-image/main/xmlutil
 chmod +x ii.py 
 ```
 
-3. (Optional) Use opt.py to install it to the /opt directory:
+3. (Optional) Use [opt.py](https://github.com/byte-cook/opt) to install it to the /opt directory:
 ```
 sudo opt.py install inspect-image ii.py xmlutil.py
 ```
